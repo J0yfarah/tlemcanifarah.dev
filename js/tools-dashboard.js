@@ -2,7 +2,8 @@ const tools = [
     {
         id: 'vscode',
         name: 'Visual Studio Code',
-        icon: 'assets/tools/vscode.png',
+        icon: '<i class="bi bi-code-square"></i>', // Fallback icon
+        imgIcon: 'assets/tools/vscode.png',
         category: 'ide',
         description: 'Powerful source code editor with extensive plugin support.',
         proficiency: 95,
@@ -15,7 +16,8 @@ const tools = [
     {
         id: 'netbeans',
         name: 'NetBeans',
-        icon: 'assets/tools/netbeans.png',
+        icon: '<i class="bi bi-code-slash"></i>',
+        imgIcon: 'assets/tools/netbeans.png',
         category: 'ide',
         description: 'Full-featured Java development environment.',
         proficiency: 85,
@@ -28,7 +30,8 @@ const tools = [
     {
         id: 'eclipse',
         name: 'Eclipse',
-        icon: 'assets/tools/eclipse.png',
+        icon: '<i class="bi bi-code"></i>',
+        imgIcon: 'assets/tools/eclipse.png',
         category: 'ide',
         description: 'Multi-language development environment.',
         proficiency: 80,
@@ -41,7 +44,8 @@ const tools = [
     {
         id: 'postman',
         name: 'Postman',
-        icon: 'assets/tools/postman.png',
+        icon: '<i class="bi bi-box-arrow-in-right"></i>',
+        imgIcon: 'assets/tools/postman.png',
         category: 'testing',
         description: 'API development and testing tool.',
         proficiency: 90,
@@ -54,7 +58,8 @@ const tools = [
     {
         id: 'jira',
         name: 'Jira',
-        icon: 'assets/tools/jira.png',
+        icon: '<i class="bi bi-kanban"></i>',
+        imgIcon: 'assets/tools/jira.png',
         category: 'project-management',
         description: 'Project management tool for agile teams.',
         proficiency: 85,
@@ -67,7 +72,8 @@ const tools = [
     {
         id: 'notion',
         name: 'Notion',
-        icon: 'assets/tools/notion.png',
+        icon: '<i class="bi bi-journal"></i>',
+        imgIcon: 'assets/tools/notion.png',
         category: 'collaboration',
         description: 'All-in-one workspace for notes and collaboration.',
         proficiency: 90,
@@ -80,7 +86,8 @@ const tools = [
     {
         id: 'slack',
         name: 'Slack',
-        icon: 'assets/tools/slack.png',
+        icon: '<i class="bi bi-chat-dots"></i>',
+        imgIcon: 'assets/tools/slack.png',
         category: 'collaboration',
         description: 'Team communication and collaboration platform.',
         proficiency: 95,
@@ -93,7 +100,8 @@ const tools = [
     {
         id: 'responsively',
         name: 'Responsively',
-        icon: 'assets/tools/responsively.png',
+        icon: '<i class="bi bi-phone"></i>',
+        imgIcon: 'assets/tools/responsively.png',
         category: 'development',
         description: 'Responsive web development testing tool.',
         proficiency: 85,
@@ -131,13 +139,28 @@ class ToolsDashboard {
         
         this.toolsGrid.innerHTML = toolsToShow.map(tool => `
             <div class="tool-card" data-tool-id="${tool.id}" data-category="${tool.category}">
-                <img src="${tool.icon}" alt="${tool.name}" class="tool-icon">
+                ${this.renderToolIcon(tool)}
                 <h3 class="tool-name">${tool.name}</h3>
                 <div class="tool-category">${this.formatCategory(tool.category)}</div>
             </div>
         `).join('');
 
         this.addToolCardListeners();
+    }
+
+    renderToolIcon(tool) {
+        // Try to load image, fallback to icon if image fails
+        return `
+            <div class="tool-icon-wrapper">
+                <img src="${tool.imgIcon}" 
+                     alt="${tool.name}" 
+                     class="tool-icon"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="tool-icon-fallback" style="display:none">
+                    ${tool.icon}
+                </div>
+            </div>
+        `;
     }
 
     formatCategory(category) {
@@ -183,35 +206,50 @@ class ToolsDashboard {
         const tool = tools.find(t => t.id === toolId);
         if (!tool) return;
 
-        const modal = new bootstrap.Modal(document.getElementById('toolModal'));
-        const modalContent = `
-            <div class="modal-header">
-                <div class="d-flex align-items-center">
-                    <img src="${tool.icon}" alt="${tool.name}" class="tool-icon-large">
-                    <h5 class="modal-title">${tool.name}</h5>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>${tool.description}</p>
-                
-                <div class="proficiency-wrapper">
-                    <h6>Proficiency</h6>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: ${tool.proficiency}%"></div>
+        // Create modal if it doesn't exist
+        let modalElement = document.getElementById('toolModal');
+        if (!modalElement) {
+            modalElement = document.createElement('div');
+            modalElement.id = 'toolModal';
+            modalElement.className = 'modal fade tool-modal';
+            modalElement.setAttribute('tabindex', '-1');
+            document.body.appendChild(modalElement);
+        }
+
+        modalElement.innerHTML = `
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="d-flex align-items-center">
+                            ${this.renderToolIcon(tool)}
+                            <h5 class="modal-title">${tool.name}</h5>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>${tool.description}</p>
+                        
+                        <div class="proficiency-wrapper">
+                            <h6>Proficiency</h6>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: ${tool.proficiency}%" 
+                                     aria-valuenow="${tool.proficiency}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+
+                        <h6>Use Cases</h6>
+                        <ul class="use-cases-list">
+                            ${tool.useCases.map(useCase => `
+                                <li><i class="bi bi-check-circle"></i>${useCase}</li>
+                            `).join('')}
+                        </ul>
                     </div>
                 </div>
-
-                <h6>Use Cases</h6>
-                <ul class="use-cases-list">
-                    ${tool.useCases.map(useCase => `
-                        <li><i class="bi bi-check-circle"></i>${useCase}</li>
-                    `).join('')}
-                </ul>
             </div>
         `;
 
-        document.querySelector('#toolModal .modal-content').innerHTML = modalContent;
+        // Initialize Bootstrap modal
+        const modal = new bootstrap.Modal(modalElement);
         modal.show();
     }
 }
