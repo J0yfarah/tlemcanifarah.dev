@@ -1047,3 +1047,54 @@ h1 {
         gap: 1rem;
     }
 }
+
+/* Tool Modal Fixes */
+.tool-modal {
+    z-index: 1060 !important;
+}
+
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+.tool-modal .modal-dialog {
+    max-width: 600px;
+}
+
+.tool-modal .btn-close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 1;
+    opacity: 0.8;
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.tool-modal .btn-close:hover {
+    opacity: 1;
+}
+
+/* ...existing code... */
+
+.tool-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
+    position: relative;
+}
+
+.tool-icon-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.tool-icon-fallback i {
+    opacity: 0.8;
+}
+
+/* ...existing code... */
