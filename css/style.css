@@ -1,10 +1,39 @@
 :root {
+ 
     --primary-color: #ff69b4;
     --secondary-color: #00bfff;
+    --dark-bg: #f1f1f1;
+    --dark-surface: #f5f5f5;
+    /* Light theme */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --accent-color: #0d6efd;
+    --navbar-bg: rgba(255, 255, 255, 0.95);
+    --card-bg: #ffffff;
+    --bg-primary-rgb: 255, 255, 255;
+    --navbar-light-bg: rgba(255, 255, 255, 0.8);
+    --navbar-dark-bg: rgba(33, 37, 41, 0.8);
+    --navbar-light-bg-scrolled: rgba(255, 255, 255, 0.95);
+    --navbar-dark-bg-scrolled: rgba(33, 37, 41, 0.95);
+    --navbar-border-light: rgba(0, 0, 0, 0.05);
+    --navbar-border-dark: rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"] {
     --dark-bg: #121212;
     --dark-surface: #1e1e1e;
-    --text-primary: #ffffff;
-    --text-secondary: #b3b3b3;
+    --bg-primary: #212529;
+    --bg-secondary: #343a40;
+    --text-primary: #f8f9fa;
+    --text-secondary: #adb5bd;
+    --border-color: #495057;
+    --accent-color: #0d6efd;
+    --navbar-bg: rgba(33, 37, 41, 0.95);
+    --card-bg: #343a40;
+    --bg-primary-rgb: 33, 37, 41;
 }
 
 /* Particles Container */
@@ -19,24 +48,26 @@
 }
 
 /* Make content appear above particles */
-.navbar, section, footer {
+section, footer {
     position: relative;
     z-index: 2;
 }
 
 body {
-    background-color: var(--dark-bg);
+    background-color: var(--bg-primary);
     color: var(--text-primary);
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    padding-top: 80px; /* Adjust this value based on your navbar height */
 }
 
 /* Enhanced Navbar Glassmorphism */
 .navbar {
-    background: rgba(18, 18, 18, 0.8);
-    backdrop-filter: blur(10px);
+    position: sticky;
+    background: var(--navbar-bg);
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    z-index: 3;
 
 }
 
@@ -102,7 +133,7 @@ h1 {
 
 .btn-outline-secondary:hover {
     background: var(--secondary-color);
-    color: white;
+    color: var(--text-primary);
     transform: translateY(-3px);
 }
 
@@ -129,7 +160,7 @@ h1 {
 .section-title {
     text-align: center;
     margin-bottom: 50px;
-    color: var(--primary-color);
+    color: var(--text-primary);
     position: relative;
 }
 
@@ -216,7 +247,7 @@ h1 {
     display: inline-block;
     padding: 5px 15px;
     background: var(--primary-color);
-    color: white;
+    color: var(--text-primary);
     border-radius: 20px;
     font-size: 0.9rem;
     margin-bottom: 10px;
@@ -314,7 +345,7 @@ h1 {
 .btn-filter.active,
 .btn-filter:hover {
     background: var(--primary-color);
-    color: white;
+    color: var(--text-primary);
 }
 
 /* Project Section Fixes */
@@ -353,11 +384,11 @@ h1 {
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
-    color: white;
+    color: var(--text-primary);
 }
 
 .view-project {
-    color: white;
+    color: var(--text-primary);
     font-weight: bold;
 }
 
@@ -467,8 +498,9 @@ h1 {
 }
 
 .modal-content {
-    background: var(--dark-surface);
+    background: var(--card-bg);
     color: var(--text-primary);
+    border-color: var(--border-color);
 }
 
 .modal-header {
@@ -490,28 +522,15 @@ h1 {
 
 /* Project Section Styles */
 .project-card {
-    background: #1e1e1e;
+    background: var(--dark-surface);
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.3s ease;
     cursor: pointer;
+    border: 1px solid var(--border-color);
 }
 
-.project-card:hover {
-    transform: translateY(-5px);
-}
-
-.project-image {
-    position: relative;
-    overflow: hidden;
-    height: 200px;
-}
-
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+/* ...existing code... */
 
 .project-overlay {
     position: absolute;
@@ -519,7 +538,7 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(var(--bg-primary-rgb), 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -527,55 +546,55 @@ h1 {
     transition: opacity 0.3s ease;
 }
 
-.project-card:hover .project-overlay {
-    opacity: 1;
-}
-
 .project-info {
     padding: 1.5rem;
+    background: var(--dark-surface);
 }
 
 .project-info h3 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    color: #fff;
+    color: var(--primary-color);
 }
 
 .project-info p {
     font-size: 0.9rem;
-    color: #aaa;
+    color: var(--text-secondary);
     margin-bottom: 1rem;
 }
 
 .tool-tag {
-    background: #2d2d2d;
-    color: #fff;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.8rem;
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
     display: inline-block;
+    border: 1px solid var(--border-color);
 }
 
 /* Project Modal Styles */
 .modal-content {
-    background: #1e1e1e;
-    color: #fff;
+    background: var(--dark-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
 }
 
 .modal-header {
-    border-bottom: 1px solid #2d2d2d;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .modal-body img {
     border-radius: 8px;
+    background: var(--bg-secondary);
 }
 
 .btn-filter {
     background: transparent;
-    color: #fff;
-    border: 1px solid #2d2d2d;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
     margin: 0 0.25rem;
     padding: 0.5rem 1rem;
     border-radius: 20px;
@@ -584,9 +603,12 @@ h1 {
 
 .btn-filter.active,
 .btn-filter:hover {
-    background: #2d2d2d;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    border-color: var(--primary-color);
 }
+
+/* ...existing code... */
 
 /* Contact Form Styles */
 .contact-form-wrapper {
@@ -885,7 +907,7 @@ h1 {
 }
 
 .tools-controls {
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--bg-secondary);
     border-radius: 15px;
     padding: 1rem;
     margin-bottom: 2rem;
@@ -906,7 +928,7 @@ h1 {
 
 .search-wrapper input {
     width: 100%;
-    background: rgba(255, 255, 255, 0.1);
+    background:  var(--bg-secondary);
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 0.8rem 1rem 0.8rem 2.5rem;
     border-radius: 10px;
@@ -994,7 +1016,7 @@ h1 {
 
 .tool-category {
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: var (--text-secondary);
     margin-top: 0.5rem;
 }
 
@@ -1195,3 +1217,393 @@ h1 {
 }
 
 /* ...existing code... */
+
+/* Modern Contact Section Styles */
+.contact-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-card {
+    background: var(--bg-primary);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+
+.form-floating > .form-control {
+    background: var(--bg-secondary) ;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    height: calc(3.5rem + 2px);
+    padding: 1rem 0.75rem;
+}
+
+.form-floating > textarea.form-control {
+    height: 150px;
+    resize: none;
+}
+
+.form-floating > .form-control:focus {
+    background: var(--bg-secondary) ;
+    border-color: var(--primary-color);
+    box-shadow: none;
+}
+
+.form-floating > label {
+    color: var(--text-secondary);
+    padding: 1rem 0.75rem;
+}
+
+.form-floating > .form-control:focus ~ label {
+    color: var(--primary-color);
+}
+
+.focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transition: 0.4s;
+}
+
+.form-floating > .form-control:focus ~ .focus-border {
+    width: 100%;
+    left: 0;
+}
+
+.contact-form .btn {
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+}
+
+.contact-form .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+
+.contact-form .btn i {
+    transition: transform 0.3s ease;
+}
+
+.contact-form .btn:hover i {
+    transform: translateX(5px);
+}
+
+/* Thank You Modal Styles */
+#thankYouModal .modal-content {
+    background: var(--dark-surface);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+#thankYouModal h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+#thankYouModal p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .contact-card {
+        padding: 1.5rem;
+    }
+    
+    .contact-title {
+        font-size: 2rem;
+    }
+}
+
+/* ...existing code... */
+
+.theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.theme-toggle .dark-icon {
+    display: none;
+}
+
+[data-bs-theme="dark"] .theme-toggle .dark-icon {
+    display: block;
+}
+
+[data-bs-theme="dark"] .theme-toggle .light-icon {
+    display: none;
+}
+
+/* Update existing components with theme variables */
+.card, .modal-content {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.section-title {
+    color: var(--text-primary);
+}
+
+.nav-link {
+    color: var(--text-secondary);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--accent-color);
+}
+
+/* Modern Navbar Styles */
+.modern-nav {
+    background: var(--navbar-light-bg);
+    border-bottom: 1px solid var(--navbar-border-light);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.modern-nav.scrolled {
+    background: var(--navbar-light-bg-scrolled);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    padding: 0.5rem 0;
+}
+
+.brand-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    margin-left: 2px;
+    margin-top: -15px;
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-toggler {
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 20px;
+    position: relative;
+    background: transparent;
+}
+
+.toggler-icon {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+.toggler-icon:first-child {
+    top: 0;
+}
+
+.toggler-icon:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.toggler-icon:last-child {
+    bottom: 0;
+}
+
+.navbar-toggler[aria-expanded="true"] .toggler-icon:first-child {
+    transform: rotate(45deg);
+    top: 50%;
+}
+
+.navbar-toggler[aria-expanded="true"] .toggler-icon:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-toggler[aria-expanded="true"] .toggler-icon:last-child {
+    transform: rotate(-45deg);
+    bottom: 40%;
+}
+
+.navbar-nav {
+    gap: 1rem;
+}
+
+.nav-link {
+    position: relative;
+    padding: 0.5rem 1rem !important;
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-text {
+    position: relative;
+    z-index: 1;
+}
+
+.nav-dot {
+    position: absolute;
+    bottom: 0.25rem;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover .nav-dot,
+.nav-link.active .nav-dot {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color);
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background: var(--bg-primary);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-nav {
+        gap: 0;
+    }
+
+    .nav-link {
+        padding: 0.75rem 1rem !important;
+    }
+
+    .nav-dot {
+        left: 1rem;
+        bottom: 50%;
+        transform: translateY(50%) scale(0);
+    }
+
+    .nav-link:hover .nav-dot,
+    .nav-link.active .nav-dot {
+        transform: translateY(50%) scale(1);
+    }
+}
+
+/* Light theme styles */
+[data-bs-theme="light"] .modern-nav {
+    background: var(--navbar-light-bg);
+    border-bottom: 1px solid var(--navbar-border-light);
+}
+
+[data-bs-theme="light"] .modern-nav.scrolled {
+    background: var(--navbar-light-bg-scrolled);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme styles */
+[data-bs-theme="dark"] .modern-nav {
+    background: var(--navbar-dark-bg);
+    border-bottom: 1px solid var(--navbar-border-dark);
+}
+
+[data-bs-theme="dark"] .modern-nav.scrolled {
+    background: var(--navbar-dark-bg-scrolled);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Update navbar mobile menu styles */
+@media (max-width: 991.98px) {
+    [data-bs-theme="light"] .navbar-collapse {
+        background: var(--navbar-light-bg-scrolled);
+        border: 1px solid var(--navbar-border-light);
+    }
+
+    [data-bs-theme="dark"] .navbar-collapse {
+        background: var(--navbar-dark-bg-scrolled);
+        border: 1px solid var(--navbar-border-dark);
+    }
+}
+
+/* ...rest of your existing styles... */

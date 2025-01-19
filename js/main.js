@@ -1,3 +1,92 @@
+// Add at the beginning of the file
+function initThemeToggle() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Set initial theme based on user preference or stored value
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    } else if (prefersDarkScheme.matches) {
+        document.documentElement.setAttribute('data-bs-theme', 'dark');
+    }
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-bs-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+}
+
+// Add at the beginning of your file
+function initializeNavbar() {
+    const navbar = document.querySelector('.modern-nav');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+    
+    // Enhanced scroll handling
+    function handleScroll() {
+        // Add scrolled class based on scroll position
+        const scrolled = window.scrollY > 50;
+        navbar.classList.toggle('scrolled', scrolled);
+        
+        // Update active section
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.offsetHeight;
+            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').slice(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // Initial call to set correct state
+    handleScroll();
+
+    // Add scroll event listener with debounce for performance
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        if (scrollTimeout) {
+            window.cancelAnimationFrame(scrollTimeout);
+        }
+        scrollTimeout = window.requestAnimationFrame(() => {
+            handleScroll();
+        });
+    });
+
+    // Smooth scroll
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            targetSection.scrollIntoView({
+                behavior: 'smooth'
+            });
+
+            // Close mobile menu if open
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            if (navbarCollapse.classList.contains('show')) {
+                navbarCollapse.classList.remove('show');
+            }
+        });
+    });
+
+    window.addEventListener('scroll', setActiveLink);
+    window.addEventListener('load', setActiveLink);
+}
+
 // Initialize AOS
 AOS.init({
     duration: 800,
@@ -15,15 +104,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background change on scroll
-window.addEventListener('scroll', function() {
+// Remove or comment out the old scroll event listener that changes navbar background
+/* window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
         navbar.style.backgroundColor = 'rgba(18, 18, 18, 0.95)';
     } else {
         navbar.style.backgroundColor = 'rgba(18, 18, 18, 0.7)';
     }
-});
+}); */
 
 // Project data
 const projects = {
@@ -243,7 +332,7 @@ const projects = {
         description: 'Real-time monitoring dashboard for IoT devices',
         tools: ['Vue.js', 'Socket.io', 'Express', 'InfluxDB'],
         image: 'https://picsum.photos/800/600?random=10',
-        gallery: ['https://picsum.photos/800/600?random=2', 'https://picsum.photos/800/600?random=3'],
+        gallery: ['https://picsum.photos/800/600?random/3'],
         problem: 'Monitor thousands of IoT devices in real-time',
         solution: 'Implemented WebSocket connections with time-series database',
         results: 'Reduced monitoring latency by 75%',
@@ -486,6 +575,12 @@ document.addEventListener('DOMContentLoaded', () => {
             loadProjects(this.getAttribute('data-filter'));
         });
     });
+
+    // Initialize theme toggle
+    initThemeToggle();
+
+    // Initialize navbar
+    initializeNavbar();
 });
 
 // Particles Configuration
@@ -664,23 +759,52 @@ filterButtons.forEach(btn => {
 });
 
 // Contact Form Handling
-document.getElementById('contactForm')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        subject: document.getElementById('subject').value,
-        message: document.getElementById('message').value
-    };
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm');
+    let thankYouModal;
 
-    // Here you would typically send the data to your backend
-    console.log('Form submitted:', formData);
-    
-    // Show success message
-    alert('Thank you for your message! I will get back to you soon.');
-    
-    // Reset form
-    this.reset();
+    // Initialize modal once DOM is loaded
+    const modalElement = document.getElementById('thankYouModal');
+    if (modalElement) {
+        thankYouModal = new bootstrap.Modal(modalElement, {
+            keyboard: true,
+            backdrop: true
+        });
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // For testing purposes, show modal immediately
+            if (thankYouModal) {
+                thankYouModal.show();
+                this.reset();
+            }
+
+            /* Uncomment for actual form submission
+            const formData = new FormData(this);
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    thankYouModal.show();
+                    this.reset();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was a problem sending your message. Please try again later.');
+            });
+            */
+        });
+    }
 });
+
+// Remove any other contact form handlers or modal code
+// ...existing code...
