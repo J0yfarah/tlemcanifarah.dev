@@ -107,8 +107,21 @@ h1 {
 /* Hero CTA Styles */
 .cta-group {
     margin-top: 2rem;
+    display: flex;
+    gap: 1rem; /* Adds horizontal space between buttons */
 }
 
+@media (max-width: 500px) { /* Adjust breakpoint as needed */
+    .cta-group {
+        flex-direction: column; /* Stack buttons vertically */
+    }
+    .cta-group button {
+        margin-bottom: 1rem; /* Adds vertical space between buttons */
+    }
+    .cta-group button:last-child {
+        margin-bottom: 0; /* Removes margin from the last button */
+    }
+}
 .btn-primary {
     background: var(--primary-color);
     border: none;
