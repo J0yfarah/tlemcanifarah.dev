@@ -561,9 +561,7 @@ function showProjectDetails(project) {
 
     document.body.appendChild(modal);
     
-    // Initialize Bootstrap modal
-    const bsModal = new bootstrap.Modal(modal);
-    bsModal.show();
+    
     
     // Initialize carousel if exists
     const carousel = modal.querySelector('.carousel');
@@ -797,39 +795,71 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
+
+// Contact Form Handling
+document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contactForm');
+    let thankYouModal;
+
+    // Initialize modal once DOM is loaded
+    const modalElement = document.getElementById('thankYouModal');
+    if (modalElement) {
+        thankYouModal = new bootstrap.Modal(modalElement, {
+            keyboard: true,
+            backdrop: true
+        });
+    }
+
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
+
+            // Log form action URL and FormData for debugging
+            console.log('Form submitted to:', this.action);
             
-            // For testing purposes, show modal immediately
-            if (thankYouModal) {
-                thankYouModal.show();
-                this.reset();
+            const formData = new FormData(this);
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
             }
 
-            /* Uncomment for actual form submission
-            const formData = new FormData(this);
+            // Ensure the form is properly filled out
+            if ([...formData.entries()].length === 0) {
+                console.error('FormData is empty. Please check the form fields.');
+                alert('Please fill out all required fields.');
+                return;
+            }
+
+            // Fetch API for form submission
             fetch(this.action, {
                 method: 'POST',
                 body: formData,
                 headers: {
                     'Accept': 'application/json'
                 }
-            }).then(response => {
-                if (response.ok) {
-                    thankYouModal.show();
-                    this.reset();
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('There was a problem sending your message. Please try again later.');
-            });
-            */
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Form successfully submitted.');
+                        thankYouModal.show();
+                        this.reset(); // Reset the form after successful submission
+                    } else {
+                        throw new Error(`Network response was not ok: ${response.statusText}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during form submission:', error);
+                    alert('There was a problem sending your message. Please try again later.');
+                });
         });
+    } else {
+        console.error('Contact form not found. Please check the form ID.');
     }
 });
+
+
+
+  });
 
 // Remove any other contact form handlers or modal code
 // ...existing code...
