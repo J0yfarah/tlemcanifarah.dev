@@ -1,3 +1,4 @@
+
 // Add at the beginning of the file
 function initThemeToggle() {
     const themeToggle = document.querySelector('.theme-toggle');
@@ -17,9 +18,32 @@ function initThemeToggle() {
         
         document.documentElement.setAttribute('data-bs-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+        updateLogo();
     });
 }
+function updateLogo() {
+    const logo = document.querySelector('.logo'); // Select the logo element
+    let logoPath = getComputedStyle(document.documentElement).getPropertyValue('--logo-path').trim(); // Get the CSS variable value
 
+    // Ensure no surrounding quotes in the path
+    if (logoPath.startsWith('"') && logoPath.endsWith('"')) {
+        logoPath = logoPath.slice(1, -1);
+    }
+
+
+    if (logo && logoPath) {
+        logo.src = logoPath; // Set the `src` attribute of the logo
+        logo.style.display = 'block'; // Ensure the logo is visible
+    }
+}
+// Initial logo update
+updateLogo();
+
+// Optional: If theme switching is dynamic, listen for changes
+const themeToggle = document.querySelector('[data-bs-theme]');
+if (themeToggle) {
+    themeToggle.addEventListener('change', updateLogo); // Update the logo when the theme changes
+}
 // Add at the beginning of your file
 function initializeNavbar() {
     const navbar = document.querySelector('.modern-nav');

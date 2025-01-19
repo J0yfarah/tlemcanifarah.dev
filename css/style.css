@@ -20,6 +20,8 @@
     --navbar-dark-bg-scrolled: rgba(33, 37, 41, 0.95);
     --navbar-border-light: rgba(0, 0, 0, 0.05);
     --navbar-border-dark: rgba(255, 255, 255, 0.05);
+    --logo-path: images\logo\Asset 1logo farah blk.svg;
+
 }
 
 [data-bs-theme="dark"] {
@@ -34,8 +36,15 @@
     --navbar-bg: rgba(33, 37, 41, 0.95);
     --card-bg: #343a40;
     --bg-primary-rgb: 33, 37, 41;
+    --logo-path: images\\logo\\Asset 2logo farah white.svg;
+
 }
 
+
+.logo {
+    height: 60px;
+    display: none; /* Initially hidden */
+}
 /* Particles Container */
 #particles-js {
     position: fixed;
