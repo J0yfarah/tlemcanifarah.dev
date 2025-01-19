@@ -186,12 +186,16 @@ class ToolsDashboard {
     }
 
     handleFilter(e) {
-        const filter = e.target.dataset.filter;
+        // Get the button element, whether clicked directly or through the span
+        const button = e.target.closest('.tool-filter');
+        if (!button) return;
+
+        const filter = button.dataset.filter;
         this.currentFilter = filter;
         
         // Update active state
         this.filterButtons.forEach(btn => btn.classList.remove('active'));
-        e.target.classList.add('active');
+        button.classList.add('active');
 
         // Filter tools
         const filteredTools = filter === 'all' 
