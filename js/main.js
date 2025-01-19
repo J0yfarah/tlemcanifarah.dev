@@ -561,7 +561,9 @@ function showProjectDetails(project) {
 
     document.body.appendChild(modal);
     
-    
+    // Initialize Bootstrap modal
+    const bsModal = new bootstrap.Modal(modal);
+    bsModal.show();
     
     // Initialize carousel if exists
     const carousel = modal.querySelector('.carousel');
@@ -795,22 +797,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-
-// Contact Form Handling
-document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contactForm');
-    let thankYouModal;
-
-    // Initialize modal once DOM is loaded
-    const modalElement = document.getElementById('thankYouModal');
-    if (modalElement) {
-        thankYouModal = new bootstrap.Modal(modalElement, {
-            keyboard: true,
-            backdrop: true
-        });
-    }
-
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -858,8 +844,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
-  });
 
 // Remove any other contact form handlers or modal code
 // ...existing code...
