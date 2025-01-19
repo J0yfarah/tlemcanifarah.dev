@@ -35,6 +35,7 @@ function updateLogo() {
         logo.src = logoPath; // Set the `src` attribute of the logo
         logo.style.display = 'block'; // Ensure the logo is visible
     }
+    console.log(logoPath);
 }
 // Initial logo update
 updateLogo();
