@@ -1630,3 +1630,52 @@ h1 {
 }
 
 /* ...rest of your existing styles... */
+
+/* ...existing code... */
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.memoji-avatar {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .col-lg-7 {
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .cta-group {
+        justify-content: center;
+    }
+}
+
+/* ...existing code... */
