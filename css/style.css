@@ -14,7 +14,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 1;  /* Changed from 0 to 1 */
     pointer-events: none;
 }
 
@@ -867,15 +867,20 @@ h1 {
 }
 
 /* Tools Dashboard Specific Styles */
+#tools-dashboard {
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
+}
+
 .tools-dashboard {
     background: linear-gradient(135deg, var(--dark-bg), var(--dark-surface));
     border-radius: 20px;
     padding: 2rem;
     margin: 2rem 0;
     position: relative;
-    overflow: hidden;
-    isolation: isolate; /* Performance optimization */
-    will-change: transform; /* Hardware acceleration */
+    z-index: 2;
+    isolation: isolate;
 }
 
 .tools-controls {
@@ -888,6 +893,8 @@ h1 {
     gap: 1rem;
     flex-wrap: wrap;
     align-items: center;
+    position: relative;
+    z-index: 2;  /* Add z-index to ensure it's above particles */
 }
 
 .search-wrapper {
@@ -914,14 +921,21 @@ h1 {
 }
 
 .tools-grid {
+   
+    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1.5rem;
     padding: 1rem;
     contain: layout style paint; /* Performance optimization */
+    position: relative;
+    z-index: 3;  /* Add z-index to ensure it's above particles */
 }
 
 .tool-card {
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 2;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
     padding: 1.5rem;
@@ -932,6 +946,7 @@ h1 {
     position: relative;
     overflow: hidden;
     contain: content; /* Performance optimization */
+    z-index: 2; 
 }
 
 .tool-card::before {
@@ -1122,7 +1137,7 @@ h1 {
 .tools-controls .tool-filter:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 105, 180, 0.15);
-    border-color: var(--primary-color);
+    border-color: var (--primary-color);
 }
 
 .tools-controls .tool-filter:hover::before {
