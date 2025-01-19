@@ -152,6 +152,8 @@ h1 {
 
 .social-links .btn {
     margin-right: 1rem;
+    color: var(--primary-color);
+    border: 2px solid var(--secondary-color);
     border-radius: 50%;
     width: 45px;
     height: 45px;
