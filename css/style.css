@@ -86,7 +86,7 @@ body {
 }
 
 .hero-section {
-    padding-top: 80px;
+    padding-top: 20px;
 }
 
 h1 {
@@ -219,6 +219,7 @@ h1 {
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    z-index: 2; /* Add z-index to ensure content stays above dot */
 }
 
 .timeline-content:hover {
@@ -237,6 +238,7 @@ h1 {
     right: -50px;
     margin-top: -10px;
     transition: all 0.3s ease;
+    z-index: 1; /* Add z-index to place dot behind content */
 }
 
 .timeline-item.right .timeline-dot {
@@ -276,6 +278,7 @@ h1 {
 @media screen and (max-width: 768px) {
     .timeline::after {
         left: 31px;
+        z-index: 0; /* Ensure line stays behind everything */
     }
     
     .timeline-item {
@@ -290,6 +293,11 @@ h1 {
     
     .timeline-dot {
         left: 21px;
+        z-index: 1; /* Keep dot behind content on mobile */
+    }
+
+    .timeline-content {
+        z-index: 3; /* Keep content above dot on mobile */
     }
 }
 
