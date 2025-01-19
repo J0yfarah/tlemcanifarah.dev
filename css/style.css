@@ -20,7 +20,7 @@
     --navbar-dark-bg-scrolled: rgba(33, 37, 41, 0.95);
     --navbar-border-light: rgba(0, 0, 0, 0.05);
     --navbar-border-dark: rgba(255, 255, 255, 0.05);
-    --logo-path: /images/logo/Asset 2logo farah blk.svg;
+    --logo-path: /images/logo/blk.svg;
 
 }
 
@@ -36,7 +36,7 @@
     --navbar-bg: rgba(33, 37, 41, 0.95);
     --card-bg: #343a40;
     --bg-primary-rgb: 33, 37, 41;
-    --logo-path: /images/logo/Asset 2logo farah white.svg;
+    --logo-path: /images/logo/white.svg;
 
 }
 
