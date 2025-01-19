@@ -786,16 +786,6 @@ filterButtons.forEach(btn => {
 // Contact Form Handling
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
-    let thankYouModal;
-
-    // Initialize modal once DOM is loaded
-    const modalElement = document.getElementById('thankYouModal');
-    if (modalElement) {
-        thankYouModal = new bootstrap.Modal(modalElement, {
-            keyboard: true,
-            backdrop: true
-        });
-    }
 
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
@@ -803,7 +793,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Log form action URL and FormData for debugging
             console.log('Form submitted to:', this.action);
-            
+
             const formData = new FormData(this);
             for (let [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);
@@ -827,7 +817,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => {
                     if (response.ok) {
                         console.log('Form successfully submitted.');
-                        thankYouModal.show();
+                        showThankYouModal();
                         this.reset(); // Reset the form after successful submission
                     } else {
                         throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -842,6 +832,47 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Contact form not found. Please check the form ID.');
     }
 });
+
+function showThankYouModal() {
+    const modalId = 'thankYouModal';
+    let modal = document.getElementById(modalId);
+
+    // Remove existing modal if present
+    if (modal) {
+        modal.remove();
+    }
+
+    // Create new modal
+    modal = document.createElement('div');
+    modal.className = 'modal fade';
+    modal.id = modalId;
+
+    modal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thank You!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                    <h3 class="mt-3">Message Sent Successfully!</h3>
+                    <p class="mb-4">Thank you for reaching out. I'll get back to you soon.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Append the modal to the body
+    document.body.appendChild(modal);
+
+    // Initialize and show the modal
+    const thankYouModal = new bootstrap.Modal(modal);
+    thankYouModal.show();
+};
 
 
 
